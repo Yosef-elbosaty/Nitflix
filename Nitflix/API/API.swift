@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class API: NSObject {
     
-    class func movies(page: Int = 1,completion: @escaping(_ error:Error?,_ movies:[Movie]?,_ last_page: Int)->Void){
+    class func popularMovies(page: Int = 1,completion: @escaping(_ error:Error?,_ movies:[Movie]?,_ last_page: Int)->Void){
         let moviesURL = URLs.popularURL+"&page=\(page)"
         let params = ["page":page]
         AF.request(moviesURL, method: .get, parameters: params, encoding: URLEncoding.default, headers: Helper.headers).responseJSON { (response) in

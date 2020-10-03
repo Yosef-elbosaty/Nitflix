@@ -13,10 +13,12 @@ class MoviesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieIV: UIImageView!
     @IBOutlet weak var movieYear: UILabel!
     @IBOutlet weak var movieRate: UILabel!
-    func switchViews(movie: Movie){
+    func configureCell(movie: Movie){
         let imageURL = URL(string: movie.poster)
         self.movieIV.kf.setImage(with: imageURL)
         self.movieYear.text = movie.relaseYear()
         self.movieRate.text = "⭐️\(movie.rate)"
+        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
+        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
     }
 }

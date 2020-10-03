@@ -18,7 +18,12 @@ class Movie: NSObject {
     var rate : Float
     var geners : [String] = []
     init?(dict : [String:JSON]){
-        guard let id = dict["id"]?.int, let title = dict["title"]?.string, let overview = dict["overview"]?.string, let poster = dict["poster_path"]?.toImagePath, let releaseDate = dict["release_date"]?.toString, let rate = dict["vote_average"]?.float else{return nil}
+        guard let id = dict["id"]?.int else{return nil}
+        guard let title = dict["title"]?.string else{return nil}
+        guard let overview = dict["overview"]?.string else{return nil}
+        guard let poster = dict["poster_path"]?.toImagePath else{return nil}
+        guard let releaseDate = dict["release_date"]?.toString else{return nil}
+        guard let rate = dict["vote_average"]?.float else{return nil}
         self.id = id
         self.title = title
         self.overview = overview
@@ -32,7 +37,7 @@ class Movie: NSObject {
                 self.geners = genres
             }
         }
-
+        
     }
     func relaseYear() -> String? {
         let dateFormatter = DateFormatter()

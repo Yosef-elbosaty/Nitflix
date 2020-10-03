@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 class MoviesTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var movieIV: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieYear: UILabel!
@@ -23,14 +23,17 @@ class MoviesTableViewCell: UITableViewCell {
     }
     func configureCell(movie: Movie){
         let imageURl = URL(string: movie.poster)
-        self.movieIV.kf.setImage(with: imageURl)
+        self.movieIV.kf.indicatorType = .activity
+        self.movieIV.kf.setImage(with: imageURl, placeholder: nil, options: [.transition(.fade(0.5))], progressBlock: .none)
         self.movieTitle.text = movie.title
-        let underLineAttribute = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.red] as [NSAttributedString.Key : Any]
+        let underLineAttribute = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.underlineColor: UIColor.red, NSAttributedString.Key.foregroundColor: UIColor.white] as [NSAttributedString.Key : Any]
         self.movieTitle.attributedText = NSAttributedString(string: movieTitle.text!, attributes: underLineAttribute)
         self.movieYear.text = movie.relaseYear()
         self.movieRate.text = "⭐️\(movie.rate)"
+        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
+        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
         self.summaryLabel.text = movie.overview   
     }
     
-
+    
 }

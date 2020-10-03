@@ -20,13 +20,13 @@ class MoviesViewController: UIViewController {
     
     //MARK: Variables Initialization
     var movies = [Movie]()
+    var isloading = false
     var current_page = 1
     var last_page = 1
-    var isShown = Array(repeating: false, count: 10000)
+    var isShown = Array(repeating: false, count: 1000000)
     lazy var refresher : UIRefreshControl = {
         let refresher = UIRefreshControl()
         refresher.addTarget(self, action: #selector(getMovies), for: .valueChanged)
-        
         return refresher
     }()
     
@@ -52,21 +52,24 @@ class MoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        tableView.estimatedRowHeight = 60
-        tableView.rowHeight = UITableView.automaticDimension
+       
+        tableView.addSubview(refresher)
+        collectionView.addSubview(refresher)
         tableView.separatorColor = .red
         tableView.separatorInset = UIEdgeInsets(top: -5, left: 50, bottom: -5, right: 50)
         tableView.backgroundColor = .darkGray
         refresher.tintColor = .white
+        
         getMovies()
     }
     //MARK: getMovies Function "get movies from server"
     @objc func getMovies(){
         self.refresher.endRefreshing()
-        API.movies(page: current_page) { (error, movies, last_page) in
+        API.popularMovies(page: current_page) { (error, movies, last_page) in
             if let movies = movies{
                 self.movies = movies
                 self.tableView.reloadData()
+                self.collectionView.reloadData()
                 self.current_page = 1
                 self.last_page = last_page
             }
@@ -75,10 +78,11 @@ class MoviesViewController: UIViewController {
     //MARK: loadMore Function "used in pagination"
     func loadMore(){
         guard current_page < last_page else{return}
-        API.movies(page: current_page+1) { (error, movies, last_page) in
+        API.popularMovies(page: current_page+1) { (error, movies, last_page) in
             if let movies = movies{
                 self.movies.append(contentsOf: movies)
                 self.tableView.reloadData()
+                self.collectionView.reloadData()
                 self.current_page += 1
                 self.last_page = last_page
             }
@@ -99,7 +103,7 @@ class MoviesViewController: UIViewController {
         }
     }
     
-   
+    
     
 }
 
@@ -114,8 +118,6 @@ extension MoviesViewController : UITableViewDataSource{
             return UITableViewCell()
         }
         cell.configureCell(movie: movies[indexPath.row])
-        
-        
         return cell
     }
     
@@ -139,6 +141,39 @@ extension MoviesViewController : UITableViewDelegate{
         UIView.animate(withDuration: 0.5) {
             cell.layer.transform = CATransform3DIdentity
         }
+    }
+}
+
+extension MoviesViewController : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movies.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MoviesCollectionViewCell else{return UICollectionViewCell()}
+        cell.configureCell(movie: movies[indexPath.item])
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let count = self.movies.count
+        if indexPath.item == count-1{
+            self.loadMore()
+        }
+        if isShown[indexPath.row]{
+            return
+        }
+        isShown[indexPath.row] = true
+        let translateTransform = CATransform3DRotate(CATransform3DIdentity, 90.0, 300, -100, 5)
+        cell.layer.transform = translateTransform
+        UIView.animate(withDuration: 0.5) {
+            cell.layer.transform = CATransform3DIdentity
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        var width = (screenWidth-10)/2
+        width = width > 200 ? 200 : width
+        return CGSize.init(width: width, height: width)
     }
 }
 

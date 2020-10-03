@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7529FC1447913E5B5B50B9B7 /* Pods_Nitflix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C467A9B5DF02FF8C4B53826 /* Pods_Nitflix.framework */; };
+		E8431ABE25291286008042B9 /* MoviesTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8431ABD25291286008042B9 /* MoviesTabBarViewController.swift */; };
 		E86CFFEF25282AA6008B8361 /* MoviesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86CFFEE25282AA6008B8361 /* MoviesCollectionViewCell.swift */; };
 		E8927F4F252789DD0092B167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8927F4E252789DD0092B167 /* AppDelegate.swift */; };
 		E8927F51252789DD0092B167 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8927F50252789DD0092B167 /* SceneDelegate.swift */; };
@@ -29,6 +30,7 @@
 		4C467A9B5DF02FF8C4B53826 /* Pods_Nitflix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nitflix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB91027336E1B60B2730B8D /* Pods-Netflix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Netflix.debug.xcconfig"; path = "Target Support Files/Pods-Netflix/Pods-Netflix.debug.xcconfig"; sourceTree = "<group>"; };
 		A27C5BA9C7EB6EF6BD013C9A /* Pods-Nitflix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nitflix.debug.xcconfig"; path = "Target Support Files/Pods-Nitflix/Pods-Nitflix.debug.xcconfig"; sourceTree = "<group>"; };
+		E8431ABD25291286008042B9 /* MoviesTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTabBarViewController.swift; sourceTree = "<group>"; };
 		E86CFFEE25282AA6008B8361 /* MoviesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCollectionViewCell.swift; sourceTree = "<group>"; };
 		E8927F4B252789DD0092B167 /* Nitflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nitflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8927F4E252789DD0092B167 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				E8927F52252789DD0092B167 /* MoviesViewController.swift */,
+				E8431ABD25291286008042B9 /* MoviesTabBarViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				E8927F4F252789DD0092B167 /* AppDelegate.swift in Sources */,
 				E8927F6D2527A28F0092B167 /* Movie.swift in Sources */,
 				E8927F51252789DD0092B167 /* SceneDelegate.swift in Sources */,
+				E8431ABE25291286008042B9 /* MoviesTabBarViewController.swift in Sources */,
 				E8927F672527A1010092B167 /* URLs.swift in Sources */,
 				E8927F6A2527A1CE0092B167 /* API.swift in Sources */,
 				E8927F712527ACA40092B167 /* Helper.swift in Sources */,
