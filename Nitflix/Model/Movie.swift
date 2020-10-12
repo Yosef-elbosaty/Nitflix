@@ -39,6 +39,8 @@ class Movie: NSObject {
         }
         
     }
+    
+    //Changing releaseYear Format
     func relaseYear() -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyy-MM-dd"

@@ -13,12 +13,16 @@ class MoviesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieIV: UIImageView!
     @IBOutlet weak var movieYear: UILabel!
     @IBOutlet weak var movieRate: UILabel!
+    
+    //Customize Collection View Cell
     func configureCell(movie: Movie){
         let imageURL = URL(string: movie.poster)
-        self.movieIV.kf.setImage(with: imageURL)
+        self.movieIV.kf.indicatorType = .activity
+        self.movieIV.kf.setImage(with: imageURL, placeholder: nil, options: [.transition(.fade(0.5))], progressBlock: .none)
+        self.movieIV.layer.cornerRadius = 15.0
         self.movieYear.text = movie.relaseYear()
         self.movieRate.text = "⭐️\(movie.rate)"
-        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
-        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
+//        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
+//        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
     }
 }

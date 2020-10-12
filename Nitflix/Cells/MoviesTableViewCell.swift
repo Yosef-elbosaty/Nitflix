@@ -16,22 +16,20 @@ class MoviesTableViewCell: UITableViewCell {
     @IBOutlet weak var movieYear: UILabel!
     @IBOutlet weak var movieRate: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+  
+    //Customize Table View Cell
     func configureCell(movie: Movie){
-        let imageURl = URL(string: movie.poster)
+        let imageURL = URL(string: movie.poster)
         self.movieIV.kf.indicatorType = .activity
-        self.movieIV.kf.setImage(with: imageURl, placeholder: nil, options: [.transition(.fade(0.5))], progressBlock: .none)
+        self.movieIV.kf.setImage(with: imageURL, placeholder: nil, options: [.transition(.fade(0.5))], progressBlock: .none)
+        self.movieIV.layer.cornerRadius = 15.0
         self.movieTitle.text = movie.title
         let underLineAttribute = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.underlineColor: UIColor.red, NSAttributedString.Key.foregroundColor: UIColor.white] as [NSAttributedString.Key : Any]
         self.movieTitle.attributedText = NSAttributedString(string: movieTitle.text!, attributes: underLineAttribute)
         self.movieYear.text = movie.relaseYear()
         self.movieRate.text = "⭐️\(movie.rate)"
-        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
-        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
+//        let movieRateAttributedText = [NSAttributedString.Key.backgroundColor : UIColor.red]
+//        self.movieRate.attributedText = NSAttributedString(string: movieRate.text!, attributes: movieRateAttributedText)
         self.summaryLabel.text = movie.overview   
     }
     
