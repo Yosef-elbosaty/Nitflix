@@ -19,6 +19,7 @@ class MoviesTableViewCell: UITableViewCell {
   
     //Customize Table View Cell
     func configureCell(movie: Movie){
+        
         let imageURL = URL(string: movie.poster)
         self.movieIV.kf.indicatorType = .activity
         self.movieIV.kf.setImage(with: imageURL, placeholder: nil, options: [.transition(.fade(0.5))], progressBlock: .none)

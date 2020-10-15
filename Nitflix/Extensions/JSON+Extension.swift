@@ -21,6 +21,6 @@ extension JSON{
     
     var toImagePath : String?{
         guard let string = self.string, !string.isEmpty else{return nil}
-        return URLs.imagePath + string
+        return Constants.imagePath + string
     }
 }

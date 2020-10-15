@@ -68,13 +68,16 @@ class MoviesViewController: UIViewController {
         self.tableView.separatorStyle = .none
         
     }
+    
     override func viewDidAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        self.tableView.separatorStyle = .singleLine
     }
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         activityIndicator.center = view.center
         activityIndicator.color = .white
@@ -151,30 +154,34 @@ class MoviesViewController: UIViewController {
     
     
     //Customizing Tab Bar Items
-        func prepareTabItem () {
-            let tabItem = navigationController!.tabBarItem!
-    
-            switch moviesType {
-            case .nowPlaying:
-                title = "Now Playing"
-                tabItem.title = title
-                tabItem.image = UIImage(named: "nowPlaying")
-            case .popular:
-                title = "Popular"
-                tabItem.title = title
-                tabItem.image = UIImage(named: "popular")
-            case .topRated:
-                title = "Top Rated"
-                tabItem.title = title
-                tabItem.image = UIImage(named: "topRated")
-            case .upComing:
-                title  = "Upcoming"
-                tabItem.title = title
-                tabItem.image = UIImage(named: "upComing")
-            }
+    func prepareTabItem () {
+        let tabItem = navigationController!.tabBarItem!
+        
+        switch moviesType {
+        case .nowPlaying:
+            title = "Now Playing"
+            tabItem.title = title
+            tabItem.image = UIImage(named: "nowPlaying")
+        case .popular:
+            title = "Popular"
+            tabItem.title = title
+            tabItem.image = UIImage(named: "popular")
+        case .topRated:
+            title = "Top Rated"
+            tabItem.title = title
+            tabItem.image = UIImage(named: "topRated")
+        case .upComing:
+            title  = "Upcoming"
+            tabItem.title = title
+            tabItem.image = UIImage(named: "upComing")
         }
-    
-    
+    }
+    //MARK: Navigate To MovieDetailsViewController
+    func goToMovieDetails(indexPath:IndexPath){
+        let destination = storyboard?.instantiateViewController(withIdentifier: "details") as!  MovieDetailsViewController
+        destination.movie = self.movies[indexPath.row]
+        navigationController?.pushViewController(destination, animated: true)
+    }
 }
 
 //MARK: Table View DataSource Methods
@@ -195,9 +202,9 @@ extension MoviesViewController : UITableViewDataSource{
 //MARK: Table View Delegate Methods
 extension MoviesViewController : UITableViewDelegate{
     
-//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-//        return false
-//    }
+    //    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    //        return false
+    //    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let count = self.movies.count
@@ -210,13 +217,17 @@ extension MoviesViewController : UITableViewDelegate{
         isShown[indexPath.row] = true
         
         //Animating Cell
-        let translateTransform = CATransform3DRotate(CATransform3DIdentity, 90.0, 300, -100, 5)
-        cell.layer.transform = translateTransform
+        let rotateTransform = CATransform3DRotate(CATransform3DIdentity, 90.0, 300, -100, 5)
+        cell.layer.transform = rotateTransform
         UIView.animate(withDuration: 1.0) {
             cell.layer.transform = CATransform3DIdentity
         }
     }
-   
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goToMovieDetails(indexPath: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 //MARK: Collection View DataSource & Delegate Methods
 extension MoviesViewController : UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate{
@@ -239,11 +250,14 @@ extension MoviesViewController : UICollectionViewDataSource,UICollectionViewDele
         isShown[indexPath.row] = true
         
         //Animating Cell
-        let translateTransform = CATransform3DRotate(CATransform3DIdentity, 90.0, 300, -100, 5)
-        cell.layer.transform = translateTransform
+        let rotateTransform = CATransform3DRotate(CATransform3DIdentity, 90.0, 300, -100, 5)
+        cell.layer.transform = rotateTransform
         UIView.animate(withDuration: 0.5) {
             cell.layer.transform = CATransform3DIdentity
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        goToMovieDetails(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

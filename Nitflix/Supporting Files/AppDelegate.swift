@@ -19,9 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navBar = UINavigationBar.appearance()
         navBar.backgroundColor = UIColor(red: 31.0, green: 33.0, blue: 36.0, alpha: 1)
         navBar.barStyle = UIBarStyle.black
-        if let barFont = UIFont(name: "AvenirNext-DemiBold", size: 23){
+        if let barFont = UIFont(name: "AvenirNext-DemiBold", size: 20){
             navBar.titleTextAttributes = [NSAttributedString.Key.font : barFont, NSAttributedString.Key.foregroundColor : UIColor.red]
         }
+        navBar.tintColor = .red
         
         return true
     }
